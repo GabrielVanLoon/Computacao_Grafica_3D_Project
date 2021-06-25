@@ -17,7 +17,7 @@ class CameraObject:
         """
         self.window_resolution = window_resolution
 
-        self.camera_pos   = glm.vec3(0.0, 0.0, -1.0)   # Camera Position
+        self.camera_pos   = glm.vec3(0.0, 0.2, +10.0)   # Camera Position
         self.camera_front = glm.vec3(0.0, 0.0,  1.0)   # Look Direction
         self.camera_up    = glm.vec3(0.0, 1.0,  0.0)   # Up Vector (default)
         self.camera_speed = 0.005
@@ -35,6 +35,7 @@ class CameraObject:
 
         self.__view_matrix = None
         self.__projection_matrix = None
+        self.__time = 0.0
 
     
     def get_view(self):

@@ -21,7 +21,3 @@ Para iniciar o jogo basta executar o arquivo *main.py* que se encontra na raíz 
 ## Autores
 
 [@GabrielVanLoon](https://github.com/GabrielVanLoon)
-
-[@YujiMatubara](https://github.com/YujiMatubara)
-
-Trabalho realizado para a disciplina de computação gráfica (jun/2021).

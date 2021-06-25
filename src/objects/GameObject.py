@@ -22,9 +22,9 @@ class GameObject:
     shader_program  = Shader(vertex_code, fragment_code)
     shader_model    = None # Positions, Textures, Normals and Faces
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 } 
-    shader_textures = ["./assets/textures/cube.jpg"]
+    shader_textures = ["./assets/cube/cube.jpg"]
     shader_textures_ids = []
-    object_path = "./assets/objects/cube.obj"
+    object_path = "./assets/cube/cube.obj"
     
 
     def get_model():
