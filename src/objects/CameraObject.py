@@ -33,30 +33,25 @@ class CameraObject:
         self.__yaw   = -90.0
         self.__pitch =  0.0
 
+        self.__view_matrix = None
+        self.__projection_matrix = None
+
     
     def get_view(self):
         """Compute and return the current view matrix."""
-        view_matrix = glm.lookAt(self.camera_pos, self.camera_pos+self.camera_front, self.camera_up)
-        return np.array(view_matrix).flatten()
+        self.__view_matrix = glm.lookAt(self.camera_pos, self.camera_pos+self.camera_front, self.camera_up)
+        return np.array(self.__view_matrix).flatten()
 
     
     def get_projection(self):
         """Compute and return the current projection matrix."""
-        projection_matrix = glm.perspective(glm.radians(self.proj_fov), self.proj_aspect, self.proj_near, self.proj_far)
-        return np.array(projection_matrix).flatten()
+        self.__projection_matrix = glm.perspective(glm.radians(self.proj_fov), self.proj_aspect, self.proj_near, self.proj_far)
+        return np.array(self.__projection_matrix).flatten()
 
     
     def logic(self, keys={}, buttons={}, cursor={}, objects={}) -> None:
         """Movement and mouse logics of the camera"""
         
-        # Move around the world (Naive Implement)
-        self.camera_pos[0] += keys.get(glfw.KEY_A, {"action": 0})["action"] * self.camera_speed
-        self.camera_pos[0] -= keys.get(glfw.KEY_D, {"action": 0})["action"] * self.camera_speed
-        self.camera_pos[1] += keys.get(glfw.KEY_SPACE , {"action": 0})["action"] * self.camera_speed
-        self.camera_pos[1] -= keys.get(glfw.KEY_LEFT_SHIFT, {"action": 0})["action"] * self.camera_speed
-        self.camera_pos[2] += keys.get(glfw.KEY_W, {"action": 0})["action"] * self.camera_speed
-        self.camera_pos[2] -= keys.get(glfw.KEY_S, {"action": 0})["action"] * self.camera_speed
-
         # Moving mouse using Yaw and Pitch
         xpos = cursor.get("xpos", None)
         ypos = cursor.get("ypos", None)
@@ -77,5 +72,26 @@ class CameraObject:
         front.x = np.math.cos(glm.radians(self.__yaw)) * np.math.cos(glm.radians(self.__pitch))
         front.y = np.math.sin(glm.radians(self.__pitch))
         front.z = np.math.sin(glm.radians(self.__yaw)) * np.math.cos(glm.radians(self.__pitch))
-        print(glm.normalize(front))
         self.camera_front = glm.normalize(front)
+
+        # Move around the world (Naive Implement)
+        # self.camera_pos[0] += keys.get(glfw.KEY_A, {"action": 0})["action"] * self.camera_speed
+        # self.camera_pos[0] -= keys.get(glfw.KEY_D, {"action": 0})["action"] * self.camera_speed
+        # self.camera_pos[2] += keys.get(glfw.KEY_W, {"action": 0})["action"] * self.camera_speed
+        # self.camera_pos[2] -= keys.get(glfw.KEY_S, {"action": 0})["action"] * self.camera_speed
+        self.camera_pos[1] += keys.get(glfw.KEY_SPACE , {"action": 0})["action"] * self.camera_speed
+        self.camera_pos[1] -= keys.get(glfw.KEY_LEFT_SHIFT, {"action": 0})["action"] * self.camera_speed
+
+        # Move around like Minecraft :P 
+        # - Y-axis same as naive with shift and space
+        # - XZ-axis derived from camera direction without perturb y-axis
+        if self.__view_matrix == None: return # Prevent crash in first run
+
+        v_foward  = glm.normalize(glm.vec3(self.camera_front[0], 0.0, self.camera_front[2]))
+        v_lateral = glm.normalize(glm.cross(self.camera_front, self.camera_up) * glm.vec3(1., 0., 1.))
+        
+        self.camera_pos += v_lateral * keys.get(glfw.KEY_D, {"action": 0})["action"] * self.camera_speed
+        self.camera_pos -= v_lateral * keys.get(glfw.KEY_A, {"action": 0})["action"] * self.camera_speed
+        self.camera_pos += v_foward * keys.get(glfw.KEY_W, {"action": 0})["action"] * self.camera_speed
+        self.camera_pos -= v_foward * keys.get(glfw.KEY_S, {"action": 0})["action"] * self.camera_speed
+        
