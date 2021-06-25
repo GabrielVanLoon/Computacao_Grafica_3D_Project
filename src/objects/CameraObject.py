@@ -52,7 +52,7 @@ class CameraObject:
     
     def logic(self, keys={}, buttons={}, cursor={}, objects={}) -> None:
         """Movement and mouse logics of the camera"""
-        
+
         # Moving mouse using Yaw and Pitch
         xpos = cursor.get("xpos", None)
         ypos = cursor.get("ypos", None)
@@ -95,4 +95,9 @@ class CameraObject:
         self.camera_pos -= v_lateral * keys.get(glfw.KEY_A, {"action": 0})["action"] * self.camera_speed
         self.camera_pos += v_foward * keys.get(glfw.KEY_W, {"action": 0})["action"] * self.camera_speed
         self.camera_pos -= v_foward * keys.get(glfw.KEY_S, {"action": 0})["action"] * self.camera_speed
-        
+    
+        # Make camera rotate around cube (Activity 4)
+        # self.camera_pos   = glm.vec3(10.0*np.cos(self.__time), 0.2, 10.0*np.sin(self.__time))
+        # self.camera_front = -1.0 * self.camera_pos
+        # self.__time      += 0.0005
+        # return None
