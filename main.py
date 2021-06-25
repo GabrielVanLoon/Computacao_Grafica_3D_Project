@@ -10,7 +10,8 @@ def main():
         {
             "type": GameObject,
             "items": [
-                { "position":(.0,.0,.0), "scale":(1.5, 1.5, 1.5), "rotate":(.0, 0., 45.0) },
+                { "position":(.0,.0,.0), "scale":(1, 1, 1), "rotate":(.0, 0., 0.0) },
+                { "position":(4.5,-2.0,4.5), "scale":(.3, .3, .3), "rotate":(.0, 0., 0.0) },
             ] 
         },
     ]
