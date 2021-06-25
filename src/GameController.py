@@ -6,7 +6,7 @@ from PIL import Image
 import glm
 
 from src.objects.GameObject import GameObject
-
+from src.objects.CameraObject import CameraObject
 
 class GameController:
     """
@@ -34,8 +34,12 @@ class GameController:
         self.__solid_objects = []
 
         self.__glfw_keys = {}
-        self.__glfw_observe_keys = [glfw.KEY_R]
+        self.__glfw_observe_keys = [glfw.KEY_R, glfw.KEY_C, glfw.KEY_ESCAPE,
+            glfw.KEY_A, glfw.KEY_D, glfw.KEY_W, glfw.KEY_S, glfw.KEY_LEFT_SHIFT, glfw.KEY_SPACE]
         self.__glfw_buttons = {}
+        self.__glfw_cursor  = {"posx":  width//2, "posy": height//2}
+
+        self.__camera = None
 
         self.__configure_vertexes_and_keys()
         self.__configure_objects()
@@ -56,6 +60,7 @@ class GameController:
         # Register handlers
         glfw.set_key_callback(self.__glfw_window, self.__key_event_handler)
         glfw.set_mouse_button_callback(self.__glfw_window, self.__mouse_event_handler)
+        glfw.set_cursor_pos_callback(self.__glfw_window, self.__cursor_event_handler)
 
         # Compile shaders of objects used in scene scheme
         for object in self.scheme:
@@ -94,6 +99,9 @@ class GameController:
         """
         self.__objects = []
         self.__solid_objects = []
+
+        # Create the Camera Object and set mouse position
+        self.__camera = CameraObject(self.__glfw_resolution)
 
         for object in self.scheme:
             # Create all desired object items
@@ -176,12 +184,19 @@ class GameController:
         self.__glfw_buttons[button] = { "action": action, "mods": mods }
 
 
+    def __cursor_event_handler(self, window, xpos, ypos):
+        """Manipulação do cursor para controle da mira"""
+        self.__glfw_cursor = {"xpos": xpos, "ypos": ypos }
+    
+
     def start(self) -> None:
         """
         Start the game logic and graphic loop. Runs until the player close the window.
         """
         glfw.show_window(self.__glfw_window)
-
+        glfw.set_cursor_pos(self.__glfw_window, self.__glfw_resolution[0]//2, self.__glfw_resolution[1]//2)
+        glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_DISABLED); 
+        
         # Enable 3D mode
         glEnable(GL_DEPTH_TEST)
 
@@ -196,22 +211,35 @@ class GameController:
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
             glClearColor(1.0, 1.0, 1.0, 1.0)
 
-            # If key R pressed restart the game
+            # If key R pressed restart the game, C resets the cursor
             if self.__glfw_keys.get(glfw.KEY_R, {"action": 0})["action"]:
                 self.__configure_objects()
+                glfw.set_cursor_pos(self.__glfw_window, self.__glfw_resolution[0]//2, self.__glfw_resolution[1]//2)
+            
+            # If C is pressed disable cursor, ESC return to normal
+            if self.__glfw_keys.get(glfw.KEY_C, {"action": 0})["action"]:
+                glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_DISABLED); 
+            elif self.__glfw_keys.get(glfw.KEY_ESCAPE, {"action": 0})["action"]:
+                glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_NORMAL)
 
             # Execute objects logics, if object is solid pass all solid objects to 
             # be used in the collision logics calculation
+            self.__camera.logic(self.__glfw_keys,self.__glfw_buttons, self.__glfw_cursor)
+            
             for object_group in reversed(self.__objects):
                 for item in object_group["items"]:
                     item.logic(keys=self.__glfw_keys, buttons=self.__glfw_buttons)
+
+            # Compute Camera view and projection matrix to be passed to objects draws
+            view_matrix = self.__camera.get_view()
+            projection_matrix = self.__camera.get_projection()
 
             # Foreach object group active the shader and draw items
             # Obs: Reversed because first groups have priority.
             for object_group in reversed(self.__objects):
                 object_group["type"].shader_program.use(buffers=self.__buffer)
                 for item in object_group["items"]:
-                    item.draw(view_matrix=[ 1.0, 0., 0., 0., 0.0, 1., 0., 0., 0.0, 0., 1., 0., 0.0, 0., 0., 1. ], projection_matrix=[ 1.0, 0., 0., 0., 0.0, 1., 0., 0., 0.0, 0., 1., 0., 0.0, 0., 0., 1. ])
+                    item.draw(view_matrix=view_matrix, projection_matrix=projection_matrix)
 
             glfw.swap_buffers(self.__glfw_window)
         glfw.terminate()

@@ -78,14 +78,12 @@ class GameObject:
         Calcula e retorna a matrix model para realizar as transformações no objeto
         """
         # Translate * Scale * Rotate
-        print(self._gl_rotate)
         model_matrix = glm.mat4(1.0)
         model_matrix = glm.rotate(model_matrix, glm.radians(self._gl_rotate[0]), glm.vec3(1.0, 0.0, 0.0))
         model_matrix = glm.rotate(model_matrix, glm.radians(self._gl_rotate[1]), glm.vec3(0.0, 1.0, 0.0))
         model_matrix = glm.rotate(model_matrix, glm.radians(self._gl_rotate[2]), glm.vec3(0.0, 0.0, 1.0))
         model_matrix = glm.scale(model_matrix, glm.vec3(self._gl_scale))
-        # model_matrix = glm.translate(model_matrix, glm.vec3(self._gl_translate)) 
-        print(model_matrix)
+        model_matrix = glm.translate(model_matrix, glm.vec3(self._gl_translate)) 
         model_matrix = np.array(model_matrix).flatten()
         return  model_matrix
 
