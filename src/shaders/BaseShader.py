@@ -32,6 +32,6 @@ fragment_code = """
     
     void main(){
         vec4 texture = texture2D(samplerTexture, out_texture);
-        gl_FragColor = (u_color_mix * u_color) + ((1.0-u_color_mix)*texture) + vec4(1.0, 0.0, 0.0, 1.0);
+        gl_FragColor = (u_color_mix * u_color) + ((1.0-u_color_mix)*texture);
     }
 """

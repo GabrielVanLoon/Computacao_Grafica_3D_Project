@@ -3,6 +3,7 @@
 from src.GameController import GameController
 
 from src.objects.GameObject import GameObject
+from src.objects.complex.Skybox import Skybox
 
 def main():
 
@@ -12,7 +13,13 @@ def main():
             "items": [
                 { "position":(.0,.0,.0), "scale":(1, 1, 1), "rotate":(.0, 0., 0.0) },
                 { "position":(4.5,-2.0,4.5), "scale":(.3, .3, .3), "rotate":(.0, 0., 0.0) },
-            ] 
+            ]
+        },
+        {
+            "type": Skybox,
+            "items": [
+                { "position":(0.0,0.0,0.0), "scale":(1, 1, 1), "rotate":(0.0, 0.0, 0.0) },
+            ]
         },
     ]
 

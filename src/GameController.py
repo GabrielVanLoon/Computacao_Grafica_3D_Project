@@ -141,7 +141,7 @@ class GameController:
         # Calc. the sum number of textures needed and generate them
         qtd_textures = 0
         for object in self.scheme:
-            qtd_textures += len(object["type"].shader_textures)
+            qtd_textures += len(object["type"].object_textures)
 
         # If no textures to create then exits
         if qtd_textures == 0:
@@ -151,7 +151,7 @@ class GameController:
         texture_id = 1
         glGenTextures(qtd_textures)
         for object in self.scheme:
-            for texture in object["type"].shader_textures:
+            for texture in object["type"].object_textures:
                 # Texture Settings
                 glBindTexture(GL_TEXTURE_2D, texture_id)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
@@ -163,7 +163,7 @@ class GameController:
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.size[0], image.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, image.tobytes("raw", "RGB", 0, -1))
                 glGenerateMipmap(GL_TEXTURE_2D)
                 # Set id and increment
-                object["type"].shader_textures_ids.append(texture_id)
+                object["type"].object_textures_ids.append(texture_id)
                 texture_id += 1
 
 

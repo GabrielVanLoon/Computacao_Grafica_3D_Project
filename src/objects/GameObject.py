@@ -20,21 +20,23 @@ class GameObject:
     """
 
     shader_program  = Shader(vertex_code, fragment_code)
-    shader_model    = None # Positions, Textures, Normals and Faces
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 } 
-    shader_textures = ["./assets/cube/cube.jpg"]
-    shader_textures_ids = []
-    object_path = "./assets/cube/cube.obj"
-    
+    shader_model    = None # Positions, Textures, Normals and Faces
 
+    object_model = "./assets/cube/cube.obj"
+    object_material = ""
+    object_textures = ["./assets/cube/cube.jpg"]
+    object_textures_ids = []
+    
+    
     def get_model():
         """
         Carrega e retorna os vertices, texels e vetores normais de um arquivo .obj e retorna
         os valores para serem usados pelo GameController.
         """
         if GameObject.shader_model == None:
-            print("Loading object model: ", GameObject.object_path)
-            GameObject.shader_model = load_model_from_file(GameObject.object_path)
+            print("Loading object model: ", GameObject.object_model)
+            GameObject.shader_model = load_model_from_file(GameObject.object_model)
         return GameObject.shader_model
 
 
@@ -113,7 +115,7 @@ class GameObject:
         # Active the texture
         GameObject.shader_program.set4Float('u_color', [0.0, 0.0, 0.0, 1.0])
         GameObject.shader_program.setFloat('u_color_mix', 0.0)
-        glBindTexture(GL_TEXTURE_2D, GameObject.shader_textures_ids[0])
+        glBindTexture(GL_TEXTURE_2D, GameObject.object_textures_ids[0])
 
         # Draw object steps
         glDrawArrays(GL_TRIANGLES, self.shader_offsets["pos"], 3*len(self.shader_model['faces']))
