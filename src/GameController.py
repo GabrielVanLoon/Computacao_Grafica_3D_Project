@@ -152,6 +152,7 @@ class GameController:
         glGenTextures(qtd_textures)
         for object in self.scheme:
             for texture in object["type"].object_textures:
+                print("Loading texture at: ", texture)
                 # Texture Settings
                 glBindTexture(GL_TEXTURE_2D, texture_id)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	
@@ -159,7 +160,7 @@ class GameController:
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
                 glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
                 # Load image and generate midmap
-                image = Image.open(texture)
+                image = Image.open(texture).convert('RGB')
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image.size[0], image.size[1], 0, GL_RGB, GL_UNSIGNED_BYTE, image.tobytes("raw", "RGB", 0, -1))
                 glGenerateMipmap(GL_TEXTURE_2D)
                 # Set id and increment

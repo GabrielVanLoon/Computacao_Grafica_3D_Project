@@ -137,7 +137,7 @@ def load_model_from_file_and_mtl(filename, materials):
 
     # Draw informations :)
     textures = get_textures_from_materials(materials)
-    draws = [{"txt_index": None, "offset": 0, "qtd": 0}] # {"txt_index": None, "offset": 0, "qtd": 0}
+    draws = [{"txt_index": None, "offset": 0, "faces": 0}] # {"txt_index": None, "offset": 0, "faces": 0}
 
     # Open wavefront file and read line by line
     for line in open(filename, "r"): 
@@ -155,10 +155,12 @@ def load_model_from_file_and_mtl(filename, materials):
         # Define current active material
         elif line.split()[0] in ("usemtl", "usemat"):
             current_material = line.split()[-1].rstrip()
+            txt_index = textures.index(materials[current_material]["map_Kd"]) if materials[current_material]["map_Kd"] != None else None
             draws.append(dict({
-                "txt_index": textures.index(materials[current_material]["map_Kd"]),
-                "offset": draws[-1]["offset"] + draws[-1]["qtd"], 
-                "faces": 0
+                "txt_index": txt_index,
+                "offset": draws[-1]["offset"] + draws[-1]["faces"], 
+                "faces": 0,
+                "material": current_material,
             }))
 
         # Defining the faces

@@ -75,6 +75,7 @@ class GameObject:
         self._gl_scale     = self.scale
         return None
 
+
     def _generate_model_matrix(self, scale_first=False) -> list:
         """
         Calcula e retorna a matrix model para realizar as transformações no objeto
@@ -119,6 +120,7 @@ class GameObject:
 
         # Draw object steps
         glDrawArrays(GL_TRIANGLES, self.shader_offsets["pos"], 3*len(self.shader_model['faces']))
+    
     
     def logic(self, keys={}, buttons={}, objects={}) -> None:
         """
