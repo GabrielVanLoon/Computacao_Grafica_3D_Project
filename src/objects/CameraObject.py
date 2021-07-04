@@ -67,7 +67,7 @@ class CameraObject:
 
         self.__yaw   += xdelta* self.__cursor_sensitivity
         self.__pitch += ydelta* self.__cursor_sensitivity
-        self.__pitch =  min(max(self.__pitch, -60.0), 90.0) # [-60, 90] degress range
+        self.__pitch =  min(max(self.__pitch, -60.0), 89.0) # [-60, 90] degress range
 
         front = glm.vec3()
         front.x = np.math.cos(glm.radians(self.__yaw)) * np.math.cos(glm.radians(self.__pitch))
