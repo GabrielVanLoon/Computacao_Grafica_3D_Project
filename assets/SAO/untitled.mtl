@@ -1,0 +1,46 @@
+# Blender MTL File: 'None'
+# Material Count: 4
+
+newmtl Material.002
+Ns 86.470579
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.160000 0.160000 0.160000
+Ni 1.450000
+d 0.000000
+illum 1
+map_Kd /home/yuji/Desktop/source/textures/W.png
+
+newmtl Material.003
+Ns 86.470579
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.240000 0.240000 0.240000
+Ni 1.450000
+d 0.000000
+illum 1
+map_Kd /home/yuji/Desktop/source/textures/F.png
+
+newmtl Material.004
+Ns 86.470579
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.800000 0.800000 0.800000
+Ni 1.450000
+d 0.000000
+illum 1
+map_Kd /home/yuji/Desktop/source/textures/R.png
+
+newmtl Material.006
+Ns 86.470579
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.800000 0.800000 0.800000
+Ni 1.450000
+d 0.000000
+illum 1
+map_Kd /home/yuji/Desktop/source/textures/F.png
