@@ -7,7 +7,9 @@ import glm
 from src.objects.GameObject import GameObject
 from src.shaders.Shader import Shader
 from src.shaders.BaseShader import vertex_code, fragment_code
-from src.helpers.loader import load_model_from_file
+from src.helpers.loader import load_materials_from_file
+from src.helpers.loader import get_textures_from_materials
+from src.helpers.loader import load_model_from_file_and_mtl
 
 class Skybox(GameObject):
     """
@@ -18,20 +20,27 @@ class Skybox(GameObject):
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 }
     shader_model    = None # Positions, Textures, Normals and Faces
 
-    object_model = "./assets/sky/sky.obj"
-    object_material = ""
-    object_textures = ["./assets/sky/animecloud.png"]
+    object_paths = { "folder": "./assets/sky/", "mtl": "sky.mtl", "obj": "sky.obj" } 
+    object_materials = []
+    object_textures = []
     object_textures_ids = []
 
 
     def get_model():
         """
-        Carrega e retorna os vertices, texels e vetores normais de um arquivo .obj e retorna
-        os valores para serem usados pelo GameController.
+        Carrega os arquivos .obj e .mtl necessários para iniciar as variáveis de object_* que
+        serão usadas pelo Game Controller. Também prepara as intruções a serem usadas nos Draws.
         """
+        # Loading textures and illuminance values from .mtl
+        Skybox.object_materials = load_materials_from_file(Skybox.object_paths["folder"] + Skybox.object_paths["mtl"])
+        Skybox.object_textures = get_textures_from_materials(Skybox.object_materials, preffix_path=Skybox.object_paths["folder"])
+
         if Skybox.shader_model == None:
-            print("Loading object model: ", Skybox.object_model)
-            Skybox.shader_model = load_model_from_file(Skybox.object_model)
+            print("Loading object model: ", Skybox.object_paths["folder"] + Skybox.object_paths["obj"])
+            Skybox.shader_model = load_model_from_file_and_mtl(Skybox.object_paths["folder"] + Skybox.object_paths["obj"], Skybox.object_materials)
+        
+        print(Skybox.shader_model["draws"])
+
         return Skybox.shader_model
 
 
@@ -53,14 +62,19 @@ class Skybox(GameObject):
         Skybox.shader_program.set4fMatrix('u_view', view_matrix)
         Skybox.shader_program.set4fMatrix('u_projection', projection_matrix)
         
-        # Active the texture
+        # Disable color mode
         Skybox.shader_program.set4Float('u_color', [0.0, 0.0, 0.0, 1.0])
         Skybox.shader_program.setFloat('u_color_mix', 0.0)
-        glBindTexture(GL_TEXTURE_2D, Skybox.object_textures_ids[0])
 
-        # Draw object steps
-        glDrawArrays(GL_TRIANGLES, self.shader_offsets["pos"], 3*len(self.shader_model['faces']))
-    
+        for draw in Skybox.shader_model["draws"]:
+            if draw["txt_index"] is None: continue
+
+            # Active the texture
+            glBindTexture(GL_TEXTURE_2D, Skybox.object_textures_ids[draw["txt_index"]])
+
+            # Draw object steps
+            glDrawArrays(GL_TRIANGLES, self.shader_offsets["pos"] + 3*draw["offset"], 3*draw["faces"])
+        
 
     def logic(self, keys={}, buttons={}, objects={}) -> None:
         """
