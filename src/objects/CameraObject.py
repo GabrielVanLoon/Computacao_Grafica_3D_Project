@@ -20,7 +20,7 @@ class CameraObject:
         self.camera_pos   = glm.vec3(0.0, 0.2, +10.0)   # Camera Position
         self.camera_front = glm.vec3(0.0, 0.0,  1.0)   # Look Direction
         self.camera_up    = glm.vec3(0.0, 1.0,  0.0)   # Up Vector (default)
-        self.camera_speed = 0.005
+        self.camera_speed = 0.05
 
         self.proj_fov     = 45.0
         self.proj_aspect  = window_resolution[0]/window_resolution[1]
@@ -67,7 +67,7 @@ class CameraObject:
 
         self.__yaw   += xdelta* self.__cursor_sensitivity
         self.__pitch += ydelta* self.__cursor_sensitivity
-        self.__pitch =  min(max(self.__pitch, -60.0), 90.0) # [-60, 90] degress range
+        self.__pitch =  min(max(self.__pitch, -60.0), 89.0) # [-60, 90] degress range
 
         front = glm.vec3()
         front.x = np.math.cos(glm.radians(self.__yaw)) * np.math.cos(glm.radians(self.__pitch))

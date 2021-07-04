@@ -76,7 +76,6 @@ class Shader:
         self.__attributes['position'] = glGetAttribLocation(self.__program, "position")
         self.__attributes['texture_coord'] = glGetAttribLocation(self.__program, "texture_coord")
         # self.__attributes['normals'] = glGetAttribLocation(self.__program, "normals")
-        print("Location...", self.__attributes )
 
 
     def use(self, buffers) -> None:
