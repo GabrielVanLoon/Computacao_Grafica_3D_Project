@@ -8,6 +8,7 @@ from src.objects.scenario.Skybox import Skybox
 from src.objects.scenario.Classroom import Classroom
 from src.objects.scenario.Ichuraku import Ichiraku
 from src.objects.scenario.Academy import Academy
+from src.objects.scenario.Grass import Grass
 
 from src.objects.characters.Uraraka import Uraraka
 from src.objects.characters.Bakugo import Bakugo
@@ -74,6 +75,12 @@ def main():
             "type": Ichiraku,
             "items": [
                 { "position":(-5.0,0.0,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 90.0, 0.0) },
+            ]
+        },
+        {
+            "type": Grass,
+            "items": [
+                { "position":(0.0,0.0,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 0.0, 0.0) },
             ]
         },
         {
