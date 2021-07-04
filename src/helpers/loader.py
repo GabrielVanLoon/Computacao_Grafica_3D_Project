@@ -160,7 +160,7 @@ def load_model_from_file_and_mtl(filename, materials):
                 "txt_index": txt_index,
                 "offset": draws[-1]["offset"] + draws[-1]["faces"], 
                 "faces": 0,
-                "material": current_material,
+                "mat": current_material,
             }))
 
         # Defining the faces

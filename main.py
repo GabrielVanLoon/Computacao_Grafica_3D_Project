@@ -6,6 +6,8 @@ from src.objects.GameObject import GameObject
 
 from src.objects.scenario.Skybox import Skybox
 from src.objects.scenario.Classroom import Classroom
+from src.objects.scenario.Ichuraku import Ichiraku
+from src.objects.scenario.Academy import Academy
 
 from src.objects.characters.Uraraka import Uraraka
 from src.objects.characters.Bakugo import Bakugo
@@ -19,8 +21,7 @@ def main():
         {
             "type": GameObject,
             "items": [
-                { "position":(.0,.0,.0), "scale":(1, 1, 1), "rotate":(.0, 0., 0.0) },
-                { "position":(4.5,-2.0,4.5), "scale":(.3, .3, .3), "rotate":(.0, 0., 0.0) },
+                { "position":(.0,+1.0,.0), "scale":(1, 1, 1), "rotate":(.0, 0., 0.0) },
             ]
         },
 
@@ -57,10 +58,22 @@ def main():
         },
 
         # Scenario Objects
+        # {
+        #     "type": Classroom,
+        #     "items": [
+        #         { "position":(0.0,-1.0,0.0), "scale":(.5, .5, .5), "rotate":(0.0, 0.0, 0.0) },
+        #     ]
+        # },
         {
-            "type": Classroom,
+            "type": Academy,
             "items": [
-                { "position":(0.0,0.0,0.0), "scale":(1, 1, 1), "rotate":(0.0, 0.0, 0.0) },
+                { "position":(-20.0,-0.7,0.0), "scale":(5., 5., 5.), "rotate":(0.0, 90.0, 0.0) },
+            ]
+        },
+        {
+            "type": Ichiraku,
+            "items": [
+                { "position":(-5.0,0.0,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 90.0, 0.0) },
             ]
         },
         {
@@ -72,7 +85,7 @@ def main():
     ]
 
     # Atualizar glm para 1.1.8
-    game = GameController(title="T2 Computer Graphics", width=650, height=650, scheme=scene_scheme)
+    game = GameController(title="T2 Computer Graphics", width=1050, height=650, scheme=scene_scheme)
     game.start()
 
 

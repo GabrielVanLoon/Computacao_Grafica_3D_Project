@@ -110,10 +110,7 @@ class GameObject:
         self.__class__.shader_program.set4fMatrix('u_view', view_matrix)
         self.__class__.shader_program.set4fMatrix('u_projection', projection_matrix)
         
-        # Disable color mode
-        self.__class__.shader_program.set4Float('u_color', [1.0, 1.0, 1.0, 1.0])
         
-
         for draw in self.__class__.shader_model["draws"]:
             
             # Nothing to draw
@@ -127,7 +124,8 @@ class GameObject:
             
             # Else draw white color solid objects :)
             else:
-                self.__class__.shader_program.setFloat('u_color_mix', 0.0)
+                self.__class__.shader_program.setFloat('u_color_mix', 1.0)
+                self.__class__.shader_program.set4Float('u_color', self.__class__.object_materials[draw["mat"]]["Kd"] + [1.0])
                 glDrawArrays(GL_TRIANGLES, self.shader_offsets["pos"] + 3*draw["offset"], 3*draw["faces"])
 
 
