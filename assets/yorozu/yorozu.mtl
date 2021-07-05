@@ -1,0 +1,145 @@
+# Blender MTL File: 'None'
+# Material Count: 13
+
+newmtl arm2_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_j00_arm.png
+
+newmtl cheek_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_j00_cheek.png
+
+newmtl chest1_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_chest.png
+
+newmtl chest2_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_chest.png
+
+newmtl chest_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_chest.png
+
+newmtl eye_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_j00_eye.png
+
+newmtl head1_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_j00_face.png
+
+newmtl head2_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_j00_head.png
+
+newmtl leg1_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_leg.png
+
+newmtl leg2_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_leg.png
+
+newmtl leg_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_leg.png
+
+newmtl mouth_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_j00_mouth.png
+
+newmtl skirt_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/yorozu/Textures/ch07_u00_leg.png

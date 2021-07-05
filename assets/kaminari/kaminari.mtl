@@ -1,0 +1,134 @@
+# Blender MTL File: 'None'
+# Material Count: 12
+
+newmtl arm1_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_arm.png
+
+newmtl arm2_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_arm.png
+
+newmtl cheek_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_j00_cheek.png
+
+newmtl chest_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_chest.png
+
+newmtl eye_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_j00_eye.png
+
+newmtl head1_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_face.png
+
+newmtl head2_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_j00_head.png
+
+newmtl head3_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_face.png
+
+newmtl leg_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_leg.png
+
+newmtl mouth_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_j00_mouth.png
+
+newmtl nose_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_j00_nose.png
+
+newmtl shoes_mat
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.550000
+d 1.000000
+illum 2
+map_Kd /home/gabriel/Models/kaminari/Textures/Default/ch08_c00_shoes.png

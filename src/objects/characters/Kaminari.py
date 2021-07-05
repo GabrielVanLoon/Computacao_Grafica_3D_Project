@@ -9,7 +9,7 @@ from src.objects.GameObject2 import GameObject
 from src.shaders.Shader import Shader
 from src.shaders.BaseShader import vertex_code, fragment_code
 
-class Jiro(GameObject):
+class Kaminari(GameObject):
     """
     Implementa o céu utilizando o método Sky Sphere.
     """
@@ -18,7 +18,7 @@ class Jiro(GameObject):
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 }
     shader_model    = None # Positions, Textures, Normals and Faces
 
-    object_paths = { "folder": "./assets/jiro/", "mtl": "jiro.mtl", "obj": "jiro.obj" }
+    object_paths = { "folder": "./assets/kaminari/", "mtl": "kaminari.mtl", "obj": "kaminari.obj" }
     object_materials = []
     object_textures = []
     object_textures_ids = []
@@ -28,7 +28,7 @@ class Jiro(GameObject):
 
     def get_model():
         """Exported function used by Game Controller"""
-        return GameObject._get_model_helper(Jiro)
+        return GameObject._get_model_helper(Kaminari)
 
 
     def __init__(self, position=(0,0,0), scale=(0,0,0), rotate=(0,0,0)) -> None:
