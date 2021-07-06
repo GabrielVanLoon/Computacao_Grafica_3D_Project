@@ -88,6 +88,11 @@ class GameController:
                 for normal_id in face[2]:
                     self.__normals .append(object_model['normals'][normal_id-1])
 
+            # Free memory (variables will not be used anymore :P)
+            object["type"].shader_model['vertices'] = None
+            object["type"].shader_model['texture'] = None
+            object["type"].shader_model['normals'] = None
+
             # Configure observed keys
             if hasattr(object["type"], "subscribe_keys"):
                 self.__glfw_observe_keys += object["type"].subscribe_keys
