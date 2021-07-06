@@ -19,9 +19,13 @@ from src.objects.characters.Kaminari import Kaminari
 from src.objects.characters.Yorozu import Yorozu
 from src.objects.characters.Mineta import Mineta
 from src.objects.characters.Lida import Lida
+from src.objects.characters.Totoro import Totoro
+from src.objects.characters.Monokuma import Monokuma
+from src.objects.characters.Evelynn import Evelynn
 
 
 def main():
+
 
     scene_scheme = [
         # {
@@ -66,6 +70,19 @@ def main():
             "type": Lida,
             "items": [{ "position":(-18.0, 0.0, 0.0), "scale":(1, 1, 1), "rotate":(0.0, 0.0, 0.0) },]
         },
+        {
+            "type": Totoro,
+            "items": [{ "position":(-2.47, 0.0, -1.56), "scale":(20, 20, 20), "rotate":(0.0, 105.2, 0.0) },]
+        },
+        {
+            "type": Monokuma,
+            "items": [{ "position":(49.86, 0.0, -45.33), "scale":(1, 1, 1), "rotate":(0.0, -96.3, 0.0) },]
+        },
+        {
+            "type": Evelynn,
+            "items": [{ "position":(-28.7, 0.0, -106.44), "scale":(1, 1, 1), "rotate":(0.0, -193.65, 0.0) },]
+        },
+
 
 
         # Scenario Objects
@@ -81,10 +98,10 @@ def main():
             "type": Ichiraku,
             "items": [{ "position":(-5.0,0.0,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 90.0, 0.0) }, ]
         },
-        # {
-        #     "type": Grass,
-        #     "items": [{ "position":(0.0,0.0,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 0.0, 0.0) },]
-        # },
+        {
+            "type": Grass,
+            "items": [{ "position":(0.0,-0.2,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 0.0, 0.0) },]
+        },
         {
             "type": Skybox,
             "items": [{ "position":(0.0,0.0,0.0), "scale":(1, 1, 1), "rotate":(0.0, 0.0, 0.0) },]
