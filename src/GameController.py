@@ -33,8 +33,11 @@ class GameController:
         self.__buffer = None
         self.__solid_objects = []
 
+        self.__polygon_mode = False
+        self.__polygon_pressed = False
+
         self.__glfw_keys = {}
-        self.__glfw_observe_keys = [glfw.KEY_R, glfw.KEY_C, glfw.KEY_ESCAPE,
+        self.__glfw_observe_keys = [glfw.KEY_P, glfw.KEY_R, glfw.KEY_C, glfw.KEY_ESCAPE, glfw.KEY_LEFT, glfw.KEY_RIGHT,
             glfw.KEY_A, glfw.KEY_D, glfw.KEY_W, glfw.KEY_S, glfw.KEY_LEFT_SHIFT, glfw.KEY_SPACE]
         self.__glfw_buttons = {}
         self.__glfw_cursor  = {"posx":  width//2, "posy": height//2}
@@ -217,6 +220,11 @@ class GameController:
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
             glClearColor(1.0, 1.0, 1.0, 1.0)
 
+            if self.__polygon_mode:
+                glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
+            else:
+                glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
+
             # If key R pressed restart the game, C resets the cursor
             if self.__glfw_keys.get(glfw.KEY_R, {"action": 0})["action"]:
                 self.__configure_objects()
@@ -227,6 +235,13 @@ class GameController:
                 glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_DISABLED); 
             elif self.__glfw_keys.get(glfw.KEY_ESCAPE, {"action": 0})["action"]:
                 glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_NORMAL)
+            
+            # If P is pressed enable polygon mode
+            if self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"] and not self.__polygon_pressed:
+                self.__polygon_mode = not self.__polygon_mode
+                self.__polygon_pressed = True # Avoid double click
+            elif self.__polygon_pressed and not self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"]:
+                self.__polygon_pressed = False
 
             # Execute objects logics, if object is solid pass all solid objects to 
             # be used in the collision logics calculation

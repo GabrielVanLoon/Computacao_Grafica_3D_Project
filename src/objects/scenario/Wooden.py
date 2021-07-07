@@ -38,17 +38,5 @@ class Wooden(GameObject):
         Interface que permite a criação de lógicas a serem executadas pelo objeto
         a cada iteração do jogo. Recebe os estados dos inputs.
         """
-        #pass
-    # Uncomment to allow Jiro positioning
-        delta_mov = 0.01
-        delta_rot = 0.05
-        self.position[0] += keys.get(glfw.KEY_J, {"action": 0})["action"] * delta_mov
-        self.position[0] -= keys.get(glfw.KEY_L, {"action": 0})["action"] * delta_mov
-        self.position[2] += keys.get(glfw.KEY_I, {"action": 0})["action"] * delta_mov
-        self.position[2] -= keys.get(glfw.KEY_K, {"action": 0})["action"] * delta_mov
-        self.position[1] += keys.get(glfw.KEY_UP, {"action": 0})["action"] * delta_mov
-        self.position[1] -= keys.get(glfw.KEY_DOWN, {"action": 0})["action"] * delta_mov
-        self.rotate[1] += keys.get(glfw.KEY_U, {"action": 0})["action"] * delta_rot
-        self.rotate[1] -= keys.get(glfw.KEY_O, {"action": 0})["action"] * delta_rot
-        self._configure_gl_variables()
-        print("Position", self.position, " --- Rotate: ", self.rotate[1])
+        pass
+    

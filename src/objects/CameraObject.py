@@ -17,7 +17,7 @@ class CameraObject:
         """
         self.window_resolution = window_resolution
 
-        self.camera_pos   = glm.vec3(0.0, 0.2, +10.0)   # Camera Position
+        self.camera_pos   = glm.vec3(0.0, 0.6, +10.0)   # Camera Position
         self.camera_front = glm.vec3(0.0, 0.0,  1.0)   # Look Direction
         self.camera_up    = glm.vec3(0.0, 1.0,  0.0)   # Up Vector (default)
         self.camera_speed = 0.05
@@ -52,6 +52,8 @@ class CameraObject:
     
     def logic(self, keys={}, buttons={}, cursor={}, objects={}) -> None:
         """Movement and mouse logics of the camera"""
+
+        old_camera_pos = glm.vec3(self.camera_pos)
 
         # Moving mouse using Yaw and Pitch
         xpos = cursor.get("xpos", None)
@@ -95,7 +97,22 @@ class CameraObject:
         self.camera_pos -= v_lateral * keys.get(glfw.KEY_A, {"action": 0})["action"] * self.camera_speed
         self.camera_pos += v_foward * keys.get(glfw.KEY_W, {"action": 0})["action"] * self.camera_speed
         self.camera_pos -= v_foward * keys.get(glfw.KEY_S, {"action": 0})["action"] * self.camera_speed
-    
+
+        # Move restrictions
+        if self.camera_pos[1] > 40.0 or self.camera_pos[1] < 0.5:
+            self.camera_pos[1] = old_camera_pos[1]
+        if self.camera_pos[0] > 130.0 or self.camera_pos[0] < -130.0:
+            self.camera_pos[0] = old_camera_pos[0]
+        if self.camera_pos[2] > 130.0 or self.camera_pos[2] < -130.0:
+            self.camera_pos[2] = old_camera_pos[2]
+
+        # Increase/Decrase camera angle with UP and DOWN Keys
+        self.proj_fov -= 0.1 * keys.get(glfw.KEY_LEFT, {"action": 0})["action"]
+        self.proj_fov += 0.1 * keys.get(glfw.KEY_RIGHT, {"action": 0})["action"]
+
+        self.proj_fov = self.proj_fov if self.proj_fov < 89.0 else 89.0
+        self.proj_fov = self.proj_fov if self.proj_fov > 15.0 else 15.0
+
         # Make camera rotate around cube (Activity 4)
         # self.camera_pos   = glm.vec3(10.0*np.cos(self.__time), 0.2, 10.0*np.sin(self.__time))
         # self.camera_front = -1.0 * self.camera_pos
