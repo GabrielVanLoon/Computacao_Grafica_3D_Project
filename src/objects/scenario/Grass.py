@@ -3,6 +3,7 @@ import numpy as np
 from OpenGL.GL import *
 import OpenGL.GL.shaders
 import glm
+import glfw
 
 from src.objects.GameObject2 import GameObject
 from src.shaders.Shader import Shader

@@ -9,6 +9,7 @@ from src.objects.scenario.Classroom import Classroom
 from src.objects.scenario.Ichuraku import Ichiraku
 from src.objects.scenario.Academy import Academy
 from src.objects.scenario.Grass import Grass
+from src.objects.scenario.Wooden import Wooden
 
 from src.objects.characters.Uraraka import Uraraka
 from src.objects.characters.Bakugo import Bakugo
@@ -100,11 +101,15 @@ def main():
         },
         {
             "type": Grass,
-            "items": [{ "position":(0.0,-0.2,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, 0.0, 0.0) },]
+            "items": [{ "position":(0.0,-0.3,-5.0), "scale":(1., 1., 1.), "rotate":(0.0, -27.25, 0.0) },]
         },
         {
             "type": Skybox,
             "items": [{ "position":(0.0,0.0,0.0), "scale":(1, 1, 1), "rotate":(0.0, 0.0, 0.0) },]
+        },
+        {
+            "type": Wooden,
+            "items": [{ "position":(-5.0,-0.10,-5.0), "scale":(1, 1, 1), "rotate":(0.0, 90.0, 0.0) },]
         },
     ]
 
