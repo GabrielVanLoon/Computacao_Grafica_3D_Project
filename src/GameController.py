@@ -22,8 +22,8 @@ class GameController:
         self.__glfw_window = False
         self.__glfw_title  = title
         self.__glfw_resolution  = (width, height)
-        self.__glfw_enable3D = enable3D
         self.scheme = scheme
+        self.__shaders = {}
         self.__configure_window()
         
         self.__objects = []
@@ -67,8 +67,11 @@ class GameController:
 
         # Compile shaders of objects used in scene scheme
         for object in self.scheme:
-            object["type"].shader_program.compile()
-
+            shader_name = object["type"].shader_name.__name__
+            # If shader not exist create, else only get the reference to the object
+            if  shader_name not in self.__shaders.keys():
+                self.__shaders[shader_name] = object["type"].shader_name.compile()
+            object["type"].shader_program = self.__shaders[shader_name]
 
     def __configure_vertexes_and_keys(self) -> None:
         """
@@ -213,6 +216,10 @@ class GameController:
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
+        # Save last used shader to optimize some calls
+        last_used_shader = None
+
+        # Main drawing loop
         while not glfw.window_should_close(self.__glfw_window):
             glfw.poll_events() 
             
@@ -225,24 +232,9 @@ class GameController:
             else:
                 glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
 
-            # If key R pressed restart the game, C resets the cursor
-            if self.__glfw_keys.get(glfw.KEY_R, {"action": 0})["action"]:
-                self.__configure_objects()
-                glfw.set_cursor_pos(self.__glfw_window, self.__glfw_resolution[0]//2, self.__glfw_resolution[1]//2)
+            # Executando a lógica do Game Controller (prioridade)
+            self.logic()
             
-            # If C is pressed disable cursor, ESC return to normal
-            if self.__glfw_keys.get(glfw.KEY_C, {"action": 0})["action"]:
-                glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_DISABLED); 
-            elif self.__glfw_keys.get(glfw.KEY_ESCAPE, {"action": 0})["action"]:
-                glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_NORMAL)
-            
-            # If P is pressed enable polygon mode
-            if self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"] and not self.__polygon_pressed:
-                self.__polygon_mode = not self.__polygon_mode
-                self.__polygon_pressed = True # Avoid double click
-            elif self.__polygon_pressed and not self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"]:
-                self.__polygon_pressed = False
-
             # Execute objects logics, if object is solid pass all solid objects to 
             # be used in the collision logics calculation
             self.__camera.logic(self.__glfw_keys,self.__glfw_buttons, self.__glfw_cursor)
@@ -258,12 +250,41 @@ class GameController:
             # Foreach object group active the shader and draw items
             # Obs: Reversed because first groups have priority.
             for object_group in reversed(self.__objects):
-                object_group["type"].shader_program.use(buffers=self.__buffer)
+
+                if last_used_shader != object_group["type"].shader_program:
+                    object_group["type"].shader_program.use(buffers=self.__buffer)
+                    last_used_shader = object_group["type"].shader_program
+
                 for item in object_group["items"]:
                     item.draw(view_matrix=view_matrix, projection_matrix=projection_matrix)
 
             glfw.swap_buffers(self.__glfw_window)
         glfw.terminate()
+
+
+    def logic(self) -> None:
+        """
+        Interface que permite a criação de lógicas a serem executadas pelo
+        Game Controller.
+        """
+
+        # If key R pressed restart the game, C resets the cursor
+        if self.__glfw_keys.get(glfw.KEY_R, {"action": 0})["action"]:
+            self.__configure_objects()
+            glfw.set_cursor_pos(self.__glfw_window, self.__glfw_resolution[0]//2, self.__glfw_resolution[1]//2)
+        
+        # If C is pressed disable cursor, ESC return to normal
+        if self.__glfw_keys.get(glfw.KEY_C, {"action": 0})["action"]:
+            glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_DISABLED); 
+        elif self.__glfw_keys.get(glfw.KEY_ESCAPE, {"action": 0})["action"]:
+            glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_NORMAL)
+        
+        # If P is pressed enable polygon mode
+        if self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"] and not self.__polygon_pressed:
+            self.__polygon_mode = not self.__polygon_mode
+            self.__polygon_pressed = True # Avoid double click
+        elif self.__polygon_pressed and not self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"]:
+            self.__polygon_pressed = False
 
 
 if __name__ == '__main__':

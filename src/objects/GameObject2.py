@@ -6,17 +6,23 @@ import glm
 
 from src.objects.GameObject import GameObject
 from src.shaders.Shader import Shader
-from src.shaders.BaseShader import vertex_code, fragment_code
+from src.shaders.BaseShader import BaseShader
 from src.helpers.loader import load_materials_from_file
 from src.helpers.loader import get_textures_from_materials
 from src.helpers.loader import load_model_from_file_and_mtl
 
 class GameObject:
     """
-    Implementa o céu utilizando o método Sky Sphere.
+    Abstração básica de um objeto que compõe a cena do jogo (Ex: jogador, obstaculo, fundo).
+    Possui  os atributos e métodos comuns a todos. Assume a forma de um quadrado se desenhado
+    em tela.
+
+    A criação do programa de Shader e declaração dos vértices é feita apenas uma vez por meio
+    de atributos e métodos estáticos (pertencentes à classe).
     """
 
-    shader_program  = Shader(vertex_code, fragment_code)
+    shader_name     = BaseShader
+    shader_program  = None
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 }
     shader_model    = None # Positions, Textures, Normals and Faces
 

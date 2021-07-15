@@ -4,8 +4,7 @@ from OpenGL.GL import *
 import OpenGL.GL.shaders
 import glm
 
-from src.shaders.Shader import Shader
-from src.shaders.BaseShader import vertex_code, fragment_code
+from src.shaders.BaseShader import BaseShader
 from src.helpers.loader import load_model_from_file
 
 
@@ -19,7 +18,8 @@ class GameObject:
     de atributos e métodos estáticos (pertencentes à classe).
     """
 
-    shader_program  = Shader(vertex_code, fragment_code)
+    shader_name     = BaseShader
+    shader_program  = None
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 } 
     shader_model    = None # Positions, Textures, Normals and Faces
 
