@@ -75,7 +75,7 @@ class Shader:
         # Save the position attrib location
         self.__attributes['position'] = glGetAttribLocation(self.__program, "position")
         self.__attributes['texture_coord'] = glGetAttribLocation(self.__program, "texture_coord")
-        # self.__attributes['normals'] = glGetAttribLocation(self.__program, "normals")
+        self.__attributes['normals'] = glGetAttribLocation(self.__program, "normals")
 
 
     def use(self, buffers) -> None:
@@ -90,9 +90,9 @@ class Shader:
         glEnableVertexAttribArray(self.__attributes['texture_coord'])
         glVertexAttribPointer(self.__attributes['texture_coord'], 3, GL_FLOAT, False, 8, ctypes.c_void_p(0))
 
-        # glBindBuffer(GL_ARRAY_BUFFER, buffers[2])
-        # glEnableVertexAttribArray(self.__attributes['normals'])
-        # glVertexAttribPointer(self.__attributes['normals'], 3, GL_FLOAT, False, 12, ctypes.c_void_p(0))
+        glBindBuffer(GL_ARRAY_BUFFER, buffers[2])
+        glEnableVertexAttribArray(self.__attributes['normals'])
+        glVertexAttribPointer(self.__attributes['normals'], 3, GL_FLOAT, False, 12, ctypes.c_void_p(0))
 
 
     def setFloat(self, name, value) -> None:

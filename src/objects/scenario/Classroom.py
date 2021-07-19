@@ -5,7 +5,7 @@ import OpenGL.GL.shaders
 import glm
 
 from src.objects.GameObject2 import GameObject
-from src.shaders.BaseShader import BaseShader
+from src.shaders.LumiShader import LumiShader
 
 
 class Classroom(GameObject):
@@ -13,7 +13,7 @@ class Classroom(GameObject):
     Implementa o céu utilizando o método Sky Sphere.
     """
 
-    shader_name     = BaseShader
+    shader_name     = LumiShader
     shader_program  = None
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 }
     shader_model    = None # Positions, Textures, Normals and Faces

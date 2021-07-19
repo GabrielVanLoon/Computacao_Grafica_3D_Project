@@ -6,7 +6,7 @@ import glm
 
 from src.objects.GameObject import GameObject
 from src.shaders.Shader import Shader
-from src.shaders.BaseShader import BaseShader
+from src.shaders.LumiShader import LumiShader
 from src.helpers.loader import load_materials_from_file
 from src.helpers.loader import get_textures_from_materials
 from src.helpers.loader import load_model_from_file_and_mtl
@@ -21,7 +21,7 @@ class GameObject:
     de atributos e métodos estáticos (pertencentes à classe).
     """
 
-    shader_name     = BaseShader
+    shader_name     = LumiShader
     shader_program  = None
     shader_offsets  = { "pos": 0, "tex": 0, "norm": 0 }
     shader_model    = None # Positions, Textures, Normals and Faces
