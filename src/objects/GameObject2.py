@@ -116,12 +116,18 @@ class GameObject:
         self.__class__.shader_program.set4fMatrix('u_view', view_matrix)
         self.__class__.shader_program.set4fMatrix('u_projection', projection_matrix)
         
-        
         for draw in self.__class__.shader_model["draws"]:
             
             # Nothing to draw
             if draw["faces"] == 0 : continue
             
+            # Config. Material Parameters
+            print(self.__class__.object_materials[draw["mat"]]["Ka"])
+            self.__class__.shader_program.set3Float('mtl_ka', self.__class__.object_materials[draw["mat"]]["Ka"])
+            self.__class__.shader_program.set3Float('mtl_kd', self.__class__.object_materials[draw["mat"]]["Kd"])
+            self.__class__.shader_program.set3Float('mtl_ks', self.__class__.object_materials[draw["mat"]]["Ks"])
+            self.__class__.shader_program.setFloat( 'mtl_ns', self.__class__.object_materials[draw["mat"]]["Ns"])
+
             # If is a texture material, active the texture and draw objects
             if draw["txt_index"] != None:
                 self.__class__.shader_program.setFloat('u_color_mix', 0.0)
@@ -131,7 +137,6 @@ class GameObject:
             # Else draw white color solid objects :)
             else:
                 self.__class__.shader_program.setFloat('u_color_mix', 1.0)
-                self.__class__.shader_program.set4Float('u_color', self.__class__.object_materials[draw["mat"]]["Kd"] + [1.0])
                 glDrawArrays(GL_TRIANGLES, self.shader_offsets["pos"] + 3*draw["offset"], 3*draw["faces"])
 
 

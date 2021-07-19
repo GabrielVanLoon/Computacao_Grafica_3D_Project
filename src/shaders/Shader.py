@@ -82,17 +82,20 @@ class Shader:
         """Activate the current shader program to be used in GPU."""
         glUseProgram(self.__program)
 
-        glBindBuffer(GL_ARRAY_BUFFER, buffers[0])
-        glEnableVertexAttribArray(self.__attributes['position'])
-        glVertexAttribPointer(self.__attributes['position'], 3, GL_FLOAT, False, 12, ctypes.c_void_p(0))
+        if self.__attributes['position'] >= 0:
+            glBindBuffer(GL_ARRAY_BUFFER, buffers[0])
+            glEnableVertexAttribArray(self.__attributes['position'])
+            glVertexAttribPointer(self.__attributes['position'], 3, GL_FLOAT, False, 12, ctypes.c_void_p(0))
+        
+        if self.__attributes['texture_coord'] >= 0:
+            glBindBuffer(GL_ARRAY_BUFFER, buffers[1])
+            glEnableVertexAttribArray(self.__attributes['texture_coord'])
+            glVertexAttribPointer(self.__attributes['texture_coord'], 3, GL_FLOAT, False, 8, ctypes.c_void_p(0))
 
-        glBindBuffer(GL_ARRAY_BUFFER, buffers[1])
-        glEnableVertexAttribArray(self.__attributes['texture_coord'])
-        glVertexAttribPointer(self.__attributes['texture_coord'], 3, GL_FLOAT, False, 8, ctypes.c_void_p(0))
-
-        glBindBuffer(GL_ARRAY_BUFFER, buffers[2])
-        glEnableVertexAttribArray(self.__attributes['normals'])
-        glVertexAttribPointer(self.__attributes['normals'], 3, GL_FLOAT, False, 12, ctypes.c_void_p(0))
+        if self.__attributes['normals'] >= 0:
+            glBindBuffer(GL_ARRAY_BUFFER, buffers[2])
+            glEnableVertexAttribArray(self.__attributes['normals'])
+            glVertexAttribPointer(self.__attributes['normals'], 3, GL_FLOAT, False, 12, ctypes.c_void_p(0))
 
 
     def setFloat(self, name, value) -> None:

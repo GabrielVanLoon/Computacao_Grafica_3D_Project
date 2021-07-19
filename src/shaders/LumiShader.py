@@ -28,14 +28,14 @@ class LumiShader:
 
     fragment_code = """
         // Phong Model Parameters
-        vec3 light_pos       = vec3(0.0, 40.0, 0.0); 
+        vec3 light_pos       = vec3(40.0, 40.0, 0.0); 
         vec3 light_intensity = vec3(1.0);
         vec3 viewer_pos      = vec3(0.0, 10.0, 0.0);
 
-        vec3 mtl_ka = vec3(0.3);
-        vec3 mtl_kd = vec3(0.8);
-        vec3 mtl_ks = vec3(0.9);
-        float mtl_ns = 1.0;
+        uniform vec3 mtl_ka = vec3(0.3);
+        uniform vec3 mtl_kd = vec3(0.8);
+        uniform vec3 mtl_ks = vec3(0.9);
+        uniform float mtl_ns = 1.0;
 
         uniform vec4  u_color;
         uniform float u_color_mix;
@@ -48,6 +48,7 @@ class LumiShader:
         void main(){
             // Loading texture
             vec4 texel = texture2D(samplerTexture, out_texture);
+            vec4 color = (u_color_mix*vec4(1.0)) + ((1.0-u_color_mix)*texel);
 
             // Ambient Intensitiy
             vec3 Ia = mtl_ka * light_intensity;
@@ -64,13 +65,10 @@ class LumiShader:
             float NH = pow(max(0.0, dot(V,R)), mtl_ns);
             vec3 Is = mtl_ks * NH * light_intensity;
 
-            // Loading Color from Texture or color_mix
-            vec4 color = (u_color_mix * u_color) + ((1.0-u_color_mix)*texel);
-
             gl_FragColor = vec4(vec3((Ia+Id+Is)*color),1.0); // Phong
-            // gl_FragColor = vec4(vec3(Ia*color),1.0); // Ambient
-            // gl_FragColor = vec4(vec3(Id*color),1.0); // Diffuse
-            // gl_FragColor = vec4(vec3(Is*color),1.0); // Specular
+            gl_FragColor = vec4(vec3((Ia)*color),1.0); // Ambient
+            // gl_FragColor = vec4(vec3((Id)*color),1.0); // Diffuse
+            // gl_FragColor = vec4(vec3((Is)*color),1.0); // Specular
         }
     """
 
