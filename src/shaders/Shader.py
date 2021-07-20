@@ -131,3 +131,10 @@ class Shader:
         if name not in self.__uniforms.keys():
             self.__uniforms[name] = glGetUniformLocation(self.__program, name)
         glUniformMatrix4fv(self.__uniforms[name], 1, GL_TRUE, value)
+
+    
+    def setInt(self, name, value) -> None:
+        """Uniform Helper"""
+        if name not in self.__uniforms.keys():
+            self.__uniforms[name] = glGetUniformLocation(self.__program, name)
+        glUniform1i(self.__uniforms[name], value)

@@ -99,12 +99,13 @@ class CameraObject:
         self.camera_pos -= v_foward * keys.get(glfw.KEY_S, {"action": 0})["action"] * self.camera_speed
 
         # Move restrictions
-        if self.camera_pos[1] > 40.0 or self.camera_pos[1] < 0.5:
-            self.camera_pos[1] = old_camera_pos[1]
-        if self.camera_pos[0] > 130.0 or self.camera_pos[0] < -130.0:
-            self.camera_pos[0] = old_camera_pos[0]
-        if self.camera_pos[2] > 130.0 or self.camera_pos[2] < -130.0:
-            self.camera_pos[2] = old_camera_pos[2]
+        # print(self.camera_pos)
+        # if self.camera_pos[1] > 40.0 or self.camera_pos[1] < 0.5:
+        #     self.camera_pos[1] = old_camera_pos[1]
+        # if self.camera_pos[0] > 130.0 or self.camera_pos[0] < -130.0:
+        #     self.camera_pos[0] = old_camera_pos[0]
+        # if self.camera_pos[2] > 130.0 or self.camera_pos[2] < -130.0:
+        #     self.camera_pos[2] = old_camera_pos[2]
 
         # Increase/Decrase camera angle with UP and DOWN Keys
         self.proj_fov -= 0.1 * keys.get(glfw.KEY_LEFT, {"action": 0})["action"]

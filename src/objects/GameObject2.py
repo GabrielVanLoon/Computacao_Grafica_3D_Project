@@ -113,16 +113,20 @@ class GameObject:
 
         # Send MVP Matrix to shader
         self.__class__.shader_program.set4fMatrix('u_model', model_matrix)
-        self.__class__.shader_program.set4fMatrix('u_view', view_matrix)
-        self.__class__.shader_program.set4fMatrix('u_projection', projection_matrix)
+        # self.__class__.shader_program.set4fMatrix('u_view', view_matrix)
+        # self.__class__.shader_program.set4fMatrix('u_projection', projection_matrix)
         
+        # Luminance (Phong Model) Configurations
+        # self.__class__.shader_program.set3Float('light_pos', luminance['light_position'])
+        # self.__class__.shader_program.set3Float('light_intensity', luminance['light_intensity'])
+        # self.__class__.shader_program.set3Float('viewer_pos', luminance['viewer_position'])
+            
         for draw in self.__class__.shader_model["draws"]:
             
             # Nothing to draw
             if draw["faces"] == 0 : continue
             
             # Config. Material Parameters
-            print(self.__class__.object_materials[draw["mat"]]["Ka"])
             self.__class__.shader_program.set3Float('mtl_ka', self.__class__.object_materials[draw["mat"]]["Ka"])
             self.__class__.shader_program.set3Float('mtl_kd', self.__class__.object_materials[draw["mat"]]["Kd"])
             self.__class__.shader_program.set3Float('mtl_ks', self.__class__.object_materials[draw["mat"]]["Ks"])

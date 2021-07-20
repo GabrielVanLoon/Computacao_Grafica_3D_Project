@@ -35,10 +35,12 @@ class GameController:
 
         self.__polygon_mode = False
         self.__polygon_pressed = False
+        self.__ilumination_mode = 0
 
         self.__glfw_keys = {}
         self.__glfw_observe_keys = [glfw.KEY_P, glfw.KEY_R, glfw.KEY_C, glfw.KEY_ESCAPE, glfw.KEY_LEFT, glfw.KEY_RIGHT,
-            glfw.KEY_A, glfw.KEY_D, glfw.KEY_W, glfw.KEY_S, glfw.KEY_LEFT_SHIFT, glfw.KEY_SPACE]
+            glfw.KEY_A, glfw.KEY_D, glfw.KEY_W, glfw.KEY_S, glfw.KEY_LEFT_SHIFT, glfw.KEY_SPACE,
+            glfw.KEY_1, glfw.KEY_2, glfw.KEY_3, glfw.KEY_4]
         self.__glfw_buttons = {}
         self.__glfw_cursor  = {"posx":  width//2, "posy": height//2}
 
@@ -226,17 +228,11 @@ class GameController:
             # Reset the screen with the white color
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) 
             glClearColor(1.0, 1.0, 1.0, 1.0)
-
-            if self.__polygon_mode:
-                glPolygonMode(GL_FRONT_AND_BACK,GL_LINE)
-            else:
-                glPolygonMode(GL_FRONT_AND_BACK,GL_FILL)
-
-            # Executando a lógica do Game Controller (prioridade)
-            self.logic()
+            glPolygonMode(GL_FRONT_AND_BACK,GL_LINE if self.__polygon_mode else GL_FILL)
             
             # Execute objects logics, if object is solid pass all solid objects to 
             # be used in the collision logics calculation
+            self.logic()
             self.__camera.logic(self.__glfw_keys,self.__glfw_buttons, self.__glfw_cursor)
             
             for object_group in reversed(self.__objects):
@@ -254,6 +250,17 @@ class GameController:
                 if last_used_shader != object_group["type"].shader_program:
                     object_group["type"].shader_program.use(buffers=self.__buffer)
                     last_used_shader = object_group["type"].shader_program
+                    
+                # Set Matrix and Projection
+                object_group["type"].shader_program.set4fMatrix('u_view', view_matrix)
+                object_group["type"].shader_program.set4fMatrix('u_projection', projection_matrix)
+                
+                # Set Luminance (Phong Model) Configurations
+                object_group["type"].shader_program.setInt ('light_mode', self.__ilumination_mode)
+                object_group["type"].shader_program.set3Float('light_pos', [193.1, 428.3, 173.3])
+                object_group["type"].shader_program.set3Float('direct_light_intensity', [0.7, 0.7, 0.9])
+                object_group["type"].shader_program.set3Float('ambient_light_intensity', [0.1, 0.1, 0.2])
+                object_group["type"].shader_program.set3Float('viewer_pos', self.__camera.camera_pos)
 
                 for item in object_group["items"]:
                     item.draw(view_matrix=view_matrix, projection_matrix=projection_matrix)
@@ -285,6 +292,16 @@ class GameController:
             self.__polygon_pressed = True # Avoid double click
         elif self.__polygon_pressed and not self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"]:
             self.__polygon_pressed = False
+
+        # If 1, 2, 3 o 4 is pressed change the illumination Mode (Phong, Ambient, Diffuse, Specular)
+        if self.__glfw_keys.get(glfw.KEY_1, {"action": 0})["action"]:
+            self.__ilumination_mode = 0
+        if self.__glfw_keys.get(glfw.KEY_2, {"action": 0})["action"]:
+            self.__ilumination_mode = 1
+        if self.__glfw_keys.get(glfw.KEY_3, {"action": 0})["action"]:
+            self.__ilumination_mode = 2
+        if self.__glfw_keys.get(glfw.KEY_4, {"action": 0})["action"]:
+            self.__ilumination_mode = 3
 
 
 if __name__ == '__main__':

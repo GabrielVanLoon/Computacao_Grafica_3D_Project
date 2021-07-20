@@ -28,9 +28,11 @@ class LumiShader:
 
     fragment_code = """
         // Phong Model Parameters
-        vec3 light_pos       = vec3(40.0, 40.0, 0.0); 
-        vec3 light_intensity = vec3(1.0);
-        vec3 viewer_pos      = vec3(0.0, 10.0, 0.0);
+        uniform int  light_mode = 1; 
+        uniform vec3 light_pos = vec3(40.0, 40.0, 0.0); 
+        uniform vec3 direct_light_intensity = vec3(0.9);
+        uniform vec3 ambient_light_intensity = vec3(0.3);
+        uniform vec3 viewer_pos = vec3(0.0, 10.0, 0.0);
 
         uniform vec3 mtl_ka = vec3(0.3);
         uniform vec3 mtl_kd = vec3(0.8);
@@ -51,24 +53,24 @@ class LumiShader:
             vec4 color = (u_color_mix*vec4(1.0)) + ((1.0-u_color_mix)*texel);
 
             // Ambient Intensitiy
-            vec3 Ia = mtl_ka * light_intensity;
+            vec3 Ia = mtl_ka * ambient_light_intensity;
 
             // Diffuse Reflection Intensitiy
             vec3 N   = normalize(out_normals);
             vec3 L   = normalize(light_pos - out_frag_pos);
             float NL = max(0.0, dot(N,L));
-            vec3 Id  =  mtl_kd * NL * light_intensity;
+            vec3 Id  =  mtl_kd * NL * direct_light_intensity;
 
             // Specular Reflection Intensity
             vec3 V = normalize(viewer_pos - out_frag_pos);
             vec3 R = reflect(-L, N);
             float NH = pow(max(0.0, dot(V,R)), mtl_ns);
-            vec3 Is = mtl_ks * NH * light_intensity;
+            vec3 Is = mtl_ks * NH * direct_light_intensity;
 
-            gl_FragColor = vec4(vec3((Ia+Id+Is)*color),1.0); // Phong
-            gl_FragColor = vec4(vec3((Ia)*color),1.0); // Ambient
-            // gl_FragColor = vec4(vec3((Id)*color),1.0); // Diffuse
-            // gl_FragColor = vec4(vec3((Is)*color),1.0); // Specular
+            if(light_mode == 0) gl_FragColor = vec4(vec3((Ia+Id+Is)*color),1.0); // Phong
+            else if (light_mode == 1) gl_FragColor = vec4(vec3((Ia)*color),1.0); // Ambient
+            else if (light_mode == 2) gl_FragColor = vec4(vec3((Id)*color),1.0); // Diffuse
+            else if (light_mode == 3) gl_FragColor = vec4(vec3((Is)*color),1.0); // Specular
         }
     """
 
