@@ -32,10 +32,14 @@ class Skybox(GameObject):
     def __init__(self, position=(0,0,0), scale=(0,0,0), rotate=(0,0,0)) -> None:
         super().__init__(position, scale, rotate)
 
+        self.__discrete_time = 0
+
 
     def logic(self, keys={}, buttons={}, objects={}) -> None:
         """
         Interface que permite a criação de lógicas a serem executadas pelo objeto
         a cada iteração do jogo. Recebe os estados dos inputs.
         """
-        pass
+        self.rotate[1]        = 0.1*self.__discrete_time
+        self.__discrete_time += 1
+        self._configure_gl_variables()

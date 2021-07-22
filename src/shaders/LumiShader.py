@@ -22,7 +22,8 @@ class LumiShader:
             gl_Position  = u_projection * u_view * u_model * vec4(position, 1.0);
             out_texture  = vec2(texture_coord);
             out_frag_pos = vec3(u_model * vec4(position, 1.0));
-            out_normals  = normals;
+            // out_normals = normals;
+            out_normals  = vec3(u_model * vec4(normals, 0.0)) ;
         }
     """
 

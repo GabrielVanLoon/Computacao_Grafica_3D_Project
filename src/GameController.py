@@ -37,9 +37,12 @@ class GameController:
         self.__polygon_pressed = False
         self.__ilumination_mode = 0
 
+        self.__discrete_time = 0
+        self.__ambient_light_modifier = 0.0
+
         self.__glfw_keys = {}
         self.__glfw_observe_keys = [glfw.KEY_P, glfw.KEY_R, glfw.KEY_C, glfw.KEY_ESCAPE, glfw.KEY_LEFT, glfw.KEY_RIGHT,
-            glfw.KEY_A, glfw.KEY_D, glfw.KEY_W, glfw.KEY_S, glfw.KEY_LEFT_SHIFT, glfw.KEY_SPACE,
+            glfw.KEY_U, glfw.KEY_I, glfw.KEY_A, glfw.KEY_D, glfw.KEY_W, glfw.KEY_S, glfw.KEY_LEFT_SHIFT, glfw.KEY_SPACE,
             glfw.KEY_1, glfw.KEY_2, glfw.KEY_3, glfw.KEY_4]
         self.__glfw_buttons = {}
         self.__glfw_cursor  = {"posx":  width//2, "posy": height//2}
@@ -250,21 +253,18 @@ class GameController:
                 if last_used_shader != object_group["type"].shader_program:
                     object_group["type"].shader_program.use(buffers=self.__buffer)
                     last_used_shader = object_group["type"].shader_program
-                    
+                
                 # Set Matrix and Projection
                 object_group["type"].shader_program.set4fMatrix('u_view', view_matrix)
                 object_group["type"].shader_program.set4fMatrix('u_projection', projection_matrix)
-                
-                # Set Luminance (Phong Model) Configurations
-                object_group["type"].shader_program.setInt ('light_mode', self.__ilumination_mode)
-                object_group["type"].shader_program.set3Float('light_pos', [193.1, 428.3, 173.3])
-                object_group["type"].shader_program.set3Float('direct_light_intensity', [0.7, 0.7, 0.9])
-                object_group["type"].shader_program.set3Float('ambient_light_intensity', [0.1, 0.1, 0.2])
-                object_group["type"].shader_program.set3Float('viewer_pos', self.__camera.camera_pos)
+
+                self.__configure_lights(object_group)
 
                 for item in object_group["items"]:
                     item.draw(view_matrix=view_matrix, projection_matrix=projection_matrix)
 
+            self.__discrete_time += 1
+            
             glfw.swap_buffers(self.__glfw_window)
         glfw.terminate()
 
@@ -279,7 +279,8 @@ class GameController:
         if self.__glfw_keys.get(glfw.KEY_R, {"action": 0})["action"]:
             self.__configure_objects()
             glfw.set_cursor_pos(self.__glfw_window, self.__glfw_resolution[0]//2, self.__glfw_resolution[1]//2)
-        
+            self.__discrete_time = 0
+
         # If C is pressed disable cursor, ESC return to normal
         if self.__glfw_keys.get(glfw.KEY_C, {"action": 0})["action"]:
             glfw.set_input_mode(self.__glfw_window, glfw.CURSOR, glfw.CURSOR_DISABLED); 
@@ -293,6 +294,12 @@ class GameController:
         elif self.__polygon_pressed and not self.__glfw_keys.get(glfw.KEY_P, {"action": 0})["action"]:
             self.__polygon_pressed = False
 
+        # If U or I is pressed enable polygon mode
+        if self.__glfw_keys.get(glfw.KEY_U, {"action": 0})["action"]:
+            self.__ambient_light_modifier -= 0.05
+        if self.__glfw_keys.get(glfw.KEY_I, {"action": 0})["action"]:
+            self.__ambient_light_modifier += 0.05
+
         # If 1, 2, 3 o 4 is pressed change the illumination Mode (Phong, Ambient, Diffuse, Specular)
         if self.__glfw_keys.get(glfw.KEY_1, {"action": 0})["action"]:
             self.__ilumination_mode = 0
@@ -302,6 +309,31 @@ class GameController:
             self.__ilumination_mode = 2
         if self.__glfw_keys.get(glfw.KEY_4, {"action": 0})["action"]:
             self.__ilumination_mode = 3
+
+    
+    def __configure_lights(self, object_group):
+        
+        curpos = self.__camera.camera_pos
+
+        if  -30.0 <= curpos[0] and curpos[0] <= 50.0 and 33 <= curpos[2] and curpos[2] <= 120:
+            # print("Inside Academy at:", curpos)
+            object_group["type"].shader_program.setInt ('light_mode', self.__ilumination_mode)
+            object_group["type"].shader_program.set3Float('light_pos',  [7.0, 12.0, 54.0])
+            object_group["type"].shader_program.set3Float('direct_light_intensity', [0.9, 0.5, 0.0])
+            object_group["type"].shader_program.set3Float('ambient_light_intensity', self.__ambient_light_modifier + np.array([0.1, 0.1, 0.2]))
+            object_group["type"].shader_program.set3Float('viewer_pos', self.__camera.camera_pos)  
+        
+        else:
+            # print("Outside world at:", curpos)
+            # Set Luminance (Phong Model) Configurations
+            # light_position = glm.rotate(glm.vec3([193.1, 428.3, 173.3]), glm.radians(0.1*self.__discrete_time), glm.vec3(0.0, 1.0, 0.0)) 
+            light_position = glm.rotate(glm.vec3([154.6, 339.6, 141.9]), glm.radians(0.1*self.__discrete_time), glm.vec3(0.0, 1.0, 0.0)) 
+            object_group["type"].shader_program.setInt ('light_mode', self.__ilumination_mode)
+            object_group["type"].shader_program.set3Float('light_pos',  light_position)
+            object_group["type"].shader_program.set3Float('direct_light_intensity', [0.7, 0.7, 0.9])
+            object_group["type"].shader_program.set3Float('ambient_light_intensity', self.__ambient_light_modifier + np.array([0.1, 0.1, 0.2]))
+            object_group["type"].shader_program.set3Float('viewer_pos', self.__camera.camera_pos)
+
 
 
 if __name__ == '__main__':

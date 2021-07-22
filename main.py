@@ -85,7 +85,6 @@ def main():
         },
 
 
-
         # Scenario Objects
         # {
         #     "type": Classroom,
